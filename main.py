@@ -39,17 +39,22 @@ class App(tk.Tk):
         self.withdraw()
         splash = SplashScreen(self)
 
-        # Setup stuff goes here
-        self.title("Calculator Plus")
+        # Basic window parameters
+        self.title(app_title)
+        self.geometry("%dx%d+0+0" % (window_width, window_height))
 
+        # ----LOADING SCREEN-----
         # Simulate a loading delay in seconds
         time.sleep(3)
-
         # Finished loading so destroy splash
         splash.destroy()
-
         # Show window again
         self.deiconify()
+
+        # -----MAIN APP-----
+
+
+
 
 
 if __name__ == "__main__":
