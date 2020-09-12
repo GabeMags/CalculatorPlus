@@ -63,26 +63,32 @@ class SplashScreen(tk.Toplevel):
             import time
             splash_progress_bar['value'] = 20
             self.update_idletasks()
+            self.update()
             time.sleep(0.5)
 
             splash_progress_bar['value'] = 40
             self.update_idletasks()
+            self.update()
             time.sleep(0.5)
 
             splash_progress_bar['value'] = 50
             self.update_idletasks()
+            self.update()
             time.sleep(0.5)
 
             splash_progress_bar['value'] = 60
             self.update_idletasks()
+            self.update()
             time.sleep(0.5)
 
             splash_progress_bar['value'] = 80
             self.update_idletasks()
+            self.update()
             time.sleep(0.5)
 
             splash_progress_bar['value'] = 100
             self.update_idletasks()
+            self.update()
             time.sleep(0.5)
 
         fake_loading()
