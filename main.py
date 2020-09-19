@@ -10,7 +10,6 @@ from tkinter.ttk import *
 from tkinter import *
 from PIL import Image, ImageTk
 
-
 # Various settings that the whole app will use. Maybe I'll make a settings file?
 window_width = 1280
 window_height = 720
@@ -34,9 +33,9 @@ class SplashScreen(tk.Toplevel):
 
         # Abandoned style code to make the progress bar have an image instead of a color
         # This code block goes before the splash_progress_bar is initialized
-        #bar_style = Style(self)  # Style() uses ttk
+        # bar_style = Style(self)  # Style() uses ttk
         # add a label in the layout
-        #bar_style.layout('Horizontal.TProgressbar',
+        # bar_style.layout('Horizontal.TProgressbar',
         #             [('Horizontal.Progressbar.trough',
         #               {'children': [('Horizontal.Progressbar.splash_progress_bar',
         #                              {'side': 'left', 'sticky': 'ns'})],
@@ -44,12 +43,12 @@ class SplashScreen(tk.Toplevel):
         #              ('Horizontal.Progressbar.label', {'sticky': ''})])
         #
         # set the label to have a background image that expands with the progress bar
-        #bar_style.configure('Horizontal.TProgressbar.label', image=background, fill=X, expand=True)
+        # bar_style.configure('Horizontal.TProgressbar.label', image=background, fill=X, expand=True)
 
         # Fake progress bar widget
         # (determinate mode animates it for us)
         splash_progress_bar = Progressbar(canvas, orient=HORIZONTAL, length=100, mode='determinate')
-        splash_progress_bar.pack(side=TOP, fill=X, padx=5, pady=5)
+        splash_progress_bar.pack(side=BOTTOM, fill=X, padx=5, pady=5)
 
         # Pack the background with the splash text on top
         panel = tk.Label(canvas, image=background, text=app_title, font=("Arial", 25, "bold"), compound="center")
@@ -61,35 +60,11 @@ class SplashScreen(tk.Toplevel):
         # The splash destructs after this bar is done
         def fake_loading():
             import time
-            splash_progress_bar['value'] = 20
-            self.update_idletasks()
-            self.update()
-            time.sleep(0.5)
-
-            splash_progress_bar['value'] = 40
-            self.update_idletasks()
-            self.update()
-            time.sleep(0.5)
-
-            splash_progress_bar['value'] = 50
-            self.update_idletasks()
-            self.update()
-            time.sleep(0.5)
-
-            splash_progress_bar['value'] = 60
-            self.update_idletasks()
-            self.update()
-            time.sleep(0.5)
-
-            splash_progress_bar['value'] = 80
-            self.update_idletasks()
-            self.update()
-            time.sleep(0.5)
-
-            splash_progress_bar['value'] = 100
-            self.update_idletasks()
-            self.update()
-            time.sleep(0.5)
+            for loadingProgress in range(1, 100):
+                splash_progress_bar['value'] = loadingProgress
+                self.update_idletasks()
+                self.update()
+                time.sleep(0.03)
 
         fake_loading()
 
@@ -107,7 +82,7 @@ class App(tk.Tk):
         # ----LOADING SCREEN-----
         # Simulate a loading delay in seconds
         # (this was removed since the loading bar now determines load duration)
-        #time.sleep(2)
+        # time.sleep(2)
 
         # Finished loading so destroy splash
         splash.destroy()
@@ -121,8 +96,7 @@ if __name__ == "__main__":
     app = App()
     app.mainloop()
 
-
-#def calculator_plus_main():
+# def calculator_plus_main():
 #    # Create the tk window
 #    main_window = Tk()
 #    main_window.title("Calculator Plus")
@@ -131,7 +105,7 @@ if __name__ == "__main__":
 #    question_label = Label(main_window, text=new_question())
 #
 #
-#def new_question():
+# def new_question():
 #    # Generate two random numbers between 0 and 9
 #    num1 = random.randint(0, 9)
 #    num2 = random.randint(0, 9)
