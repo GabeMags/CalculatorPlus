@@ -49,11 +49,11 @@ class SplashScreen(tk.Toplevel):
         # Fake progress bar widget
         # (determinate mode animates it for us)
         splash_progress_bar = Progressbar(canvas, orient=HORIZONTAL, length=100, mode='determinate')
-        splash_progress_bar.pack(side=BOTTOM, fill=X, padx=5, pady=5)
+        splash_progress_bar.pack(side=TOP, fill=X, padx=5, pady=5)
 
         # Pack the background with the splash text on top
         panel = tk.Label(canvas, image=background, text=app_title, font=("Arial", 25, "bold"), compound="center")
-        panel.pack(side=BOTTOM, fill=X)
+        panel.pack(side=TOP, fill=X)
         panel.image = background
 
         # Function responsible for
@@ -63,26 +63,32 @@ class SplashScreen(tk.Toplevel):
             import time
             splash_progress_bar['value'] = 20
             self.update_idletasks()
+            self.update()
             time.sleep(0.5)
 
             splash_progress_bar['value'] = 40
             self.update_idletasks()
+            self.update()
             time.sleep(0.5)
 
             splash_progress_bar['value'] = 50
             self.update_idletasks()
+            self.update()
             time.sleep(0.5)
 
             splash_progress_bar['value'] = 60
             self.update_idletasks()
+            self.update()
             time.sleep(0.5)
 
             splash_progress_bar['value'] = 80
             self.update_idletasks()
+            self.update()
             time.sleep(0.5)
 
             splash_progress_bar['value'] = 100
             self.update_idletasks()
+            self.update()
             time.sleep(0.5)
 
         fake_loading()
@@ -109,9 +115,7 @@ class App(tk.Tk):
         self.deiconify()
 
         # -----MAIN APP-----
-        # Create a frame to pack the widgets in
-        canvas = Frame(self)
-        canvas.pack(fill=BOTH, expand=True, padx=5, pady=5)
+
 
 if __name__ == "__main__":
     app = App()
