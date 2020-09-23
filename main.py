@@ -27,6 +27,7 @@ RED_RGB   = (255, 0, 0)
 GREEN_RGB = (0, 255, 0)
 BLUE_RGB  = (0, 0, 255)
 BLACK_RGB = (0, 0, 0)
+LGREY_RGB = (196, 196, 196)
 center_coordinates = (640, 360)  # (x, y)
 center_top_coordinates = '640, 20'
 
@@ -89,22 +90,23 @@ class App(tk.Tk):
 
         screen = self.screen
 
-        app_font_and_size = pygame.font.SysFont(None, 20)  # Size 20 font with default font type
+        font = pygame.font.SysFont(None, 20)  # Size 20 font with default font type
 
-        # Function to draw text wherever I need to
-        # centered is a boolean- if false, then use x y
-        # is_title_text is a boolean- if false, then use x y
+        # Function to draw text wherever I need to. NOTE:
+        # true_centered is a boolean- if true, then center it in the middle of the screen
+        #                               if false, use x, y
+        # is_title_text is a boolean- if it's true, it is placed in the title area of the screen
         def draw_text(text, font, font_color, surface, x, y, true_centered, is_title_text):
             text_obj = font.render(text, 1, font_color)
 
             if not true_centered:
                 if not is_title_text:
                     text_rect = text_obj.get_rect()  # Todo: get rect son lol
-                    text_rect.top_left = (x, y)  # set the text rectangle to be the literal x,y passed to this func
+                    text_rect.center = (x, y)  # set the text rectangle to be the literal x,y passed to this func
                 if is_title_text:
                     text_rect = text_obj.get_rect(center=(window_width / 2, 20))  # Special spot for the title only
 
-            if true_centered:  # Todo: who knows if I'll actually use this
+            if true_centered:  # This puts text in the very center of the application window
                 text_rect = text_obj.get_rect(center=(window_width / 2, window_height / 2))  # Todo: Lol get rect son
 
             surface.blit(text_obj, text_rect)
@@ -116,8 +118,9 @@ class App(tk.Tk):
                 screen.fill(WHITE_RGB)
                 # Todo: I want to change this from just text to a graphic for the title? maybe?
                 # Technically the x and y don't matter here so I made them 404 (arbitrary)
-                draw_text(app_title, app_font_and_size, BLACK_RGB, screen, 404, 404, False, True)
-                draw_text('HOME_SCREEN', app_font_and_size, BLACK_RGB, screen, 20, 20, True, False)
+                draw_text(app_title, font, BLACK_RGB, screen, 404, 404, False, True)
+                draw_text('HOME_SCREEN', font, BLACK_RGB, screen, window_width/2, 200, False, False)
+                draw_text('Click on one of the buttons below to start a mode! Press ESC to quit program', font, BLACK_RGB, screen, 20, 20, True, False)
 
                 # Mouse cursor location tracking
                 mouse_x, mouse_y = pygame.mouse.get_pos()
@@ -127,6 +130,17 @@ class App(tk.Tk):
                 button_std_calc = pygame.Rect(560, 500, 200, 50)
                 button_camera_calc = pygame.Rect(840, 500, 200, 50)
                 button_options = pygame.Rect(1160, 500, 200, 50)
+
+                # Drawing buttons to the screen with their styles
+                pygame.draw.rect(screen, LGREY_RGB, button_kids_calc)
+                pygame.draw.rect(screen, LGREY_RGB, button_std_calc)
+                pygame.draw.rect(screen, LGREY_RGB, button_camera_calc)
+                pygame.draw.rect(screen, LGREY_RGB, button_options)
+
+                # Drawing the text labels onto the buttons
+                draw_text('Kiddie Calculator', font, BLACK_RGB, screen, button_kids_calc.centerx, button_kids_calc.centery, False, False)
+                draw_text('Standard Calculator', font, BLACK_RGB, screen, button_std_calc.centerx, button_std_calc.centery, False, False)
+                draw_text('Camera Calculator', font, BLACK_RGB, screen, button_camera_calc.centerx, button_camera_calc.centery, False, False)
 
                 # Logic for clicking on the buttons (maybe make this into a switch case? i know its not elegant)
                 # Yes, buttons are basically collision-tracking rectangles.
@@ -141,13 +155,7 @@ class App(tk.Tk):
                         camera_calculator()
                 if button_options.collidepoint((mouse_x, mouse_y)):
                     if click:
-                        pass  # Todo: options
-
-                # Drawing buttons to the screen with their styles
-                pygame.draw.rect(screen, RED_RGB, button_kids_calc)
-                pygame.draw.rect(screen, RED_RGB, button_std_calc)
-                pygame.draw.rect(screen, RED_RGB, button_camera_calc)
-                pygame.draw.rect(screen, RED_RGB, button_options)
+                        pass  # Todo: options mode needs to be written
 
                 click = False
 
@@ -170,11 +178,14 @@ class App(tk.Tk):
         def kids_calculator():
             running = True
             while running:
+                # Usual display visuals
                 screen.fill(RED_RGB)
+                draw_text('Kids Calculator', font, WHITE_RGB, screen, 20, 20, False, True)
+                draw_text('PRESS ESCAPE TO RETURN TO MAIN MENU', font, WHITE_RGB, screen, 20, 20, True, False)
 
-                draw_text('Kids Calculator', app_font_and_size, WHITE_RGB, screen, 20, 20, False, True)
-                draw_text('PRESS ESCAPE TO RETURN TO MAIN MENU', app_font_and_size, WHITE_RGB, screen, 20, 20, True, False)
+                # TODO: MIRWAIS'S CODE GOES HERE
 
+                # Logic for returning to the main screen or quitting program
                 for event in pygame.event.get():
                     if event.type == QUIT:
                         pygame.quit()
@@ -191,8 +202,8 @@ class App(tk.Tk):
             while running:
                 screen.fill(GREEN_RGB)
 
-                draw_text('Standard Calculator', app_font_and_size, BLACK_RGB, screen, 20, 20, False, True)
-                draw_text('PRESS ESCAPE TO RETURN TO MAIN MENU', app_font_and_size, BLACK_RGB, screen, 20, 20, True, False)
+                draw_text('Standard Calculator', font, BLACK_RGB, screen, 20, 20, False, True)
+                draw_text('PRESS ESCAPE TO RETURN TO MAIN MENU', font, BLACK_RGB, screen, 20, 20, True, False)
 
                 for event in pygame.event.get():
                     if event.type == QUIT:
@@ -210,8 +221,8 @@ class App(tk.Tk):
             while running:
                 screen.fill(BLUE_RGB)
 
-                draw_text('Camera Calculator', app_font_and_size, WHITE_RGB, screen, 20, 20, False, True)
-                draw_text('PRESS ESCAPE TO RETURN TO MAIN MENU', app_font_and_size, WHITE_RGB, screen, 20, 20, True, False)
+                draw_text('Camera Calculator', font, WHITE_RGB, screen, 20, 20, False, True)
+                draw_text('PRESS ESCAPE TO RETURN TO MAIN MENU', font, WHITE_RGB, screen, 20, 20, True, False)
 
                 for event in pygame.event.get():
                     if event.type == QUIT:
