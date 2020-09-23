@@ -22,9 +22,11 @@ app_title = 'Calculator Plus'
 window_width = 1280
 window_height = 720
 # Just to make things easy
-color_white = (255, 255, 255)
-color_red = (255, 0, 0)
-color_black = (0, 0, 0)
+WHITE_RGB = (255, 255, 255)
+RED_RGB   = (255, 0, 0)
+GREEN_RGB = (0, 255, 0)
+BLUE_RGB  = (0, 0, 255)
+BLACK_RGB = (0, 0, 0)
 center_coordinates = (640, 360)  # (x, y)
 center_top_coordinates = '640, 20'
 
@@ -80,8 +82,6 @@ class App(tk.Tk):
 
         # Finished loading so destroy splash
         splash.destroy()
-        # Show window again
-        # self.deiconify()
 
         # -----MAIN APP----- This is where pygame comes into play for main GUI
         # pygame.display.set_caption(app_title)
@@ -113,10 +113,11 @@ class App(tk.Tk):
 
         def home_screen():
             while True:
-                screen.fill((0, 0, 0))
+                screen.fill(WHITE_RGB)
                 # Todo: I want to change this from just text to a graphic for the title? maybe?
                 # Technically the x and y don't matter here so I made them 404 (arbitrary)
-                draw_text(app_title, app_font_and_size, color_white, screen, 404, 404, False, True)
+                draw_text(app_title, app_font_and_size, BLACK_RGB, screen, 404, 404, False, True)
+                draw_text('HOME_SCREEN', app_font_and_size, BLACK_RGB, screen, 20, 20, True, False)
 
                 # Mouse cursor location tracking
                 mouse_x, mouse_y = pygame.mouse.get_pos()
@@ -137,16 +138,16 @@ class App(tk.Tk):
                         standard_calculator()
                 if button_camera_calc.collidepoint((mouse_x, mouse_y)):
                     if click:
-                        pass  # Todo: camera
+                        camera_calculator()
                 if button_options.collidepoint((mouse_x, mouse_y)):
                     if click:
                         pass  # Todo: options
 
                 # Drawing buttons to the screen with their styles
-                pygame.draw.rect(screen, color_red, button_kids_calc)
-                pygame.draw.rect(screen, color_red, button_std_calc)
-                pygame.draw.rect(screen, color_red, button_camera_calc)
-                pygame.draw.rect(screen, color_red, button_options)
+                pygame.draw.rect(screen, RED_RGB, button_kids_calc)
+                pygame.draw.rect(screen, RED_RGB, button_std_calc)
+                pygame.draw.rect(screen, RED_RGB, button_camera_calc)
+                pygame.draw.rect(screen, RED_RGB, button_options)
 
                 click = False
 
@@ -169,9 +170,11 @@ class App(tk.Tk):
         def kids_calculator():
             running = True
             while running:
-                screen.fill(color_black)
+                screen.fill(RED_RGB)
 
-                draw_text('Kids Calculator', app_font_and_size, color_white, screen, 20, 20, False, True)
+                draw_text('Kids Calculator', app_font_and_size, WHITE_RGB, screen, 20, 20, False, True)
+                draw_text('PRESS ESCAPE TO RETURN TO MAIN MENU', app_font_and_size, WHITE_RGB, screen, 20, 20, True, False)
+
                 for event in pygame.event.get():
                     if event.type == QUIT:
                         pygame.quit()
@@ -186,9 +189,11 @@ class App(tk.Tk):
         def standard_calculator():
             running = True
             while running:
-                screen.fill(color_black)
+                screen.fill(GREEN_RGB)
 
-                draw_text('Standard Calculator', app_font_and_size, color_white, screen, 20, 20, False, True)
+                draw_text('Standard Calculator', app_font_and_size, BLACK_RGB, screen, 20, 20, False, True)
+                draw_text('PRESS ESCAPE TO RETURN TO MAIN MENU', app_font_and_size, BLACK_RGB, screen, 20, 20, True, False)
+
                 for event in pygame.event.get():
                     if event.type == QUIT:
                         pygame.quit()
@@ -203,9 +208,11 @@ class App(tk.Tk):
         def camera_calculator():
             running = True
             while running:
-                screen.fill(color_black)
+                screen.fill(BLUE_RGB)
 
-                draw_text('Camera Calculator', app_font_and_size, color_white, screen, 20, 20)
+                draw_text('Camera Calculator', app_font_and_size, WHITE_RGB, screen, 20, 20, False, True)
+                draw_text('PRESS ESCAPE TO RETURN TO MAIN MENU', app_font_and_size, WHITE_RGB, screen, 20, 20, True, False)
+
                 for event in pygame.event.get():
                     if event.type == QUIT:
                         pygame.quit()
@@ -224,21 +231,14 @@ if __name__ == "__main__":
     app = App()
     app.mainloop()
 
-# def calculator_plus_main():
-#    # Create the tk window
-#    main_window = Tk()
-#    main_window.title("Calculator Plus")
-#
-#    # Position the question in the window
-#    question_label = Label(main_window, text=new_question())
-#
-#
-# def new_question():
-#    # Generate two random numbers between 0 and 9
-#    num1 = random.randint(0, 9)
-#    num2 = random.randint(0, 9)
-#
-#    # Create a question for the user
-#    question = num1 + "+" + num2
-#
-#    return question
+
+
+
+
+
+
+
+
+
+
+
