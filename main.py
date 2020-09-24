@@ -205,6 +205,8 @@ class App(tk.Tk):
                 draw_text('Standard Calculator', font, BLACK_RGB, screen, 20, 20, False, True)
                 draw_text('PRESS ESCAPE TO RETURN TO MAIN MENU', font, BLACK_RGB, screen, 20, 20, True, False)
 
+                # Todo: add in code for the standard calc
+
                 for event in pygame.event.get():
                     if event.type == QUIT:
                         pygame.quit()
@@ -223,6 +225,8 @@ class App(tk.Tk):
 
                 draw_text('Camera Calculator', font, WHITE_RGB, screen, 20, 20, False, True)
                 draw_text('PRESS ESCAPE TO RETURN TO MAIN MENU', font, WHITE_RGB, screen, 20, 20, True, False)
+
+                # Todo: code for the camera calc goes here
 
                 for event in pygame.event.get():
                     if event.type == QUIT:
