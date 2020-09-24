@@ -15,6 +15,7 @@ class HoverButton(Button):
         self['background'] = self.defaultBackground
 
 
+#calc window
 class StandardCalculator:
     def press(self, num):
         self.input_field.insert(END, num)
