@@ -39,7 +39,7 @@ class StandardCalculator:
         frame = Frame(master)
         frame.grid(row=0, column=0, sticky="nsew")
 
-        # Row 1
+        # Row 11
         master.grid_rowconfigure(0, weight=1)
         master.grid_columnconfigure(4,weight=1)
         self.input_field = Entry(frame, justify=RIGHT, font="Calibri 40 bold", width=4, borderwidth=7)
