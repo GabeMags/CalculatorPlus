@@ -1,7 +1,6 @@
 from tkinter import *
 
 
-# ayy
 class HoverButton(Button):
     def __init__(self, master, **kw):
         Button.__init__(self, master=master, **kw)
@@ -39,11 +38,11 @@ class StandardCalculator:
         frame = Frame(master)
         frame.grid(row=0, column=0, sticky="nsew")
 
-        # Row 11
+        # Row 1
         master.grid_rowconfigure(0, weight=1)
         master.grid_columnconfigure(4,weight=1)
         self.input_field = Entry(frame, justify=RIGHT, font="Calibri 40 bold", width=4, borderwidth=7)
-        self.input_field.grid(row=0, column=0, columnspan=20, ipady=10, ipadx=70)
+        self.input_field.grid(row=0, column=0, columnspan=20, ipady=5, ipadx=70)
 
         btn_mod = HoverButton(frame, text="%", height=3, width=7, bg="gray80", activebackground='gray73',
                               font="Calibri 11 bold",
