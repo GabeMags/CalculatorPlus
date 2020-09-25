@@ -1,4 +1,5 @@
 from tkinter import *
+import math
 
 
 class HoverButton(Button):
@@ -21,9 +22,11 @@ class StandardCalculator:
         self.input_field.insert(END, num)
 
     def equals(self):
-        answer = self.input_field.get()
+        answer = eval(self.input_field.get())
+        if float(answer).is_integer():
+            answer = int(answer)
         self.input_field.delete(0, END)
-        self.input_field.insert(0, eval(answer))
+        self.input_field.insert(0, answer)
 
     def clear(self):
         self.input_field.delete(0, END)
@@ -32,8 +35,23 @@ class StandardCalculator:
         self.input_field.delete(len(self.input_field.get()) - 1)
 
     def squared(self):
-        answer = self.input_field.get()**2
-        print(answer)
+        answer = eval(self.input_field.get() + "**2")
+        if float(answer).is_integer():
+            answer = int(answer)
+        self.input_field.delete(0, END)
+        self.input_field.insert(0, answer)
+
+    def fraction(self):
+        answer = eval("1/"+self.input_field.get())
+        if float(answer).is_integer():
+            answer = int(answer)
+        self.input_field.delete(0, END)
+        self.input_field.insert(0, answer)
+
+    def sqrt(self):
+        answer = math.sqrt(int(self.input_field.get()))
+        if float(answer).is_integer():
+            answer = int(answer)
         self.input_field.delete(0, END)
         self.input_field.insert(0, answer)
 
@@ -72,7 +90,8 @@ class StandardCalculator:
 
         # Row 2
         btn_fraction = HoverButton(frame, text="1/x", height=2, width=9, bg="gray80", activebackground='gray73',
-                                   font="Calibri 11 bold")
+                                   font="Calibri 11 bold",
+                                   command=lambda: self.fraction())
         btn_fraction.grid(column=1, row=2)
 
         btn_exponent = HoverButton(frame, text="x^2", height=2, width=9, bg="gray80", activebackground='gray73',
@@ -81,11 +100,13 @@ class StandardCalculator:
         btn_exponent.grid(column=2, row=2)
 
         btn_root = HoverButton(frame, text="x^1/2", height=2, width=9, bg="gray80", activebackground='gray73',
-                               font="Calibri 11 bold")
+                               font="Calibri 11 bold",
+                               command=lambda: self.sqrt())
         btn_root.grid(column=3, row=2)
 
         btn_div = HoverButton(frame, text="/", height=2, width=9, bg="gray80", activebackground='gray73',
-                              font="Calibri 11 bold")
+                              font="Calibri 11 bold",
+                              command=lambda: self.press('/'))
         btn_div.grid(column=4, row=2)
 
         # Row 3
