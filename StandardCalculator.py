@@ -42,7 +42,7 @@ class StandardCalculator:
         self.input_field.insert(ANCHOR, answer)
 
     def fraction(self):
-        answer = eval("1/"+self.input_field.get())
+        answer = eval("1/" + self.input_field.get())
         if float(answer).is_integer():
             answer = int(answer)
         self.input_field.delete(ANCHOR, END)
@@ -64,7 +64,7 @@ class StandardCalculator:
 
         # Row 1
         master.grid_rowconfigure(0, weight=1)
-        master.grid_columnconfigure(4,weight=1)
+        master.grid_columnconfigure(4, weight=1)
         self.input_field = Entry(frame, justify=RIGHT, font="Calibri 40", width=6, borderwidth=7)
         self.input_field.grid(row=0, column=0, columnspan=30, ipady=5, ipadx=70)
 
