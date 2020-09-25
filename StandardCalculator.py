@@ -25,11 +25,11 @@ class StandardCalculator:
         answer = eval(self.input_field.get())
         if float(answer).is_integer():
             answer = int(answer)
-        self.input_field.delete(0, END)
-        self.input_field.insert(0, answer)
+        self.input_field.delete(ANCHOR, END)
+        self.input_field.insert(ANCHOR, answer)
 
     def clear(self):
-        self.input_field.delete(0, END)
+        self.input_field.delete(ANCHOR, END)
 
     def delete(self):
         self.input_field.delete(len(self.input_field.get()) - 1)
@@ -38,22 +38,22 @@ class StandardCalculator:
         answer = eval(self.input_field.get() + "**2")
         if float(answer).is_integer():
             answer = int(answer)
-        self.input_field.delete(0, END)
-        self.input_field.insert(0, answer)
+        self.input_field.delete(ANCHOR, END)
+        self.input_field.insert(ANCHOR, answer)
 
     def fraction(self):
         answer = eval("1/"+self.input_field.get())
         if float(answer).is_integer():
             answer = int(answer)
-        self.input_field.delete(0, END)
-        self.input_field.insert(0, answer)
+        self.input_field.delete(ANCHOR, END)
+        self.input_field.insert(ANCHOR, answer)
 
     def sqrt(self):
         answer = math.sqrt(int(self.input_field.get()))
         if float(answer).is_integer():
             answer = int(answer)
-        self.input_field.delete(0, END)
-        self.input_field.insert(0, answer)
+        self.input_field.delete(ANCHOR, END)
+        self.input_field.insert(ANCHOR, answer)
 
     def __init__(self, master):
         self.master = master
