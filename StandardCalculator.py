@@ -28,6 +28,12 @@ class StandardCalculator:
             self.input_field.delete(ANCHOR, END)
         self.input_field.insert(END, num)
 
+    def press_operator(self, operator):
+        if self.input_field.get() == "ERROR":
+            self.input_field.delete(ANCHOR, END)
+        self.AnswerMode = FALSE
+        self.input_field.insert(END, operator)
+
     def equals(self):
         try:
             answer = eval(self.input_field.get())
@@ -51,6 +57,7 @@ class StandardCalculator:
             answer = int(answer)
         self.input_field.delete(ANCHOR, END)
         self.input_field.insert(ANCHOR, answer)
+        self.AnswerMode = TRUE
 
     def fraction(self):
         try:
@@ -61,6 +68,7 @@ class StandardCalculator:
             answer = "ERROR"
         self.input_field.delete(ANCHOR, END)
         self.input_field.insert(ANCHOR, answer)
+        self.AnswerMode = TRUE
 
     def sqrt(self):
         try:
@@ -71,6 +79,7 @@ class StandardCalculator:
             answer = "ERROR"
         self.input_field.delete(ANCHOR, END)
         self.input_field.insert(ANCHOR, answer)
+        self.AnswerMode = TRUE
 
     def __init__(self, master):
         self.master = master
@@ -125,7 +134,7 @@ class StandardCalculator:
 
         btn_div = HoverButton(frame, text="/", height=2, width=9, bg="gray80", activebackground='gray73',
                               font="Calibri 11 bold",
-                              command=lambda: self.press('/'))
+                              command=lambda: self.press_operator('/'))
         btn_div.grid(column=4, row=2)
 
         # Row 3
@@ -143,7 +152,7 @@ class StandardCalculator:
 
         btn_multiply = HoverButton(frame, text="X", height=2, width=9, bg="gray80", activebackground='gray73',
                                    font="Calibri 11 bold",
-                                   command=lambda: self.press('*'))
+                                   command=lambda: self.press_operator('*'))
         btn_multiply.grid(column=4, row=3)
 
         # Row 4
@@ -161,7 +170,7 @@ class StandardCalculator:
 
         btn_subtract = HoverButton(frame, text="-", height=2, width=9, bg="gray80", activebackground='gray73',
                                    font="Calibri 11 bold",
-                                   command=lambda: self.press('-'))
+                                   command=lambda: self.press_operator('-'))
         btn_subtract.grid(column=4, row=4)
 
         # Row 5
@@ -179,7 +188,7 @@ class StandardCalculator:
 
         btn_addition = HoverButton(frame, text="+", height=2, width=9, bg="gray80", activebackground='gray73',
                                    font="Calibri 11 bold",
-                                   command=lambda: self.press('+'))
+                                   command=lambda: self.press_operator('+'))
         btn_addition.grid(column=4, row=5)
 
         # Row 6
