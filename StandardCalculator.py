@@ -19,12 +19,17 @@ class HoverButton(Button):
 # calc window
 class StandardCalculator:
     def press(self, num):
+        if self.input_field.get() == "ERROR":
+            self.input_field.delete(ANCHOR, END)
         self.input_field.insert(END, num)
 
     def equals(self):
-        answer = eval(self.input_field.get())
-        if float(answer).is_integer():
-            answer = int(answer)
+        try:
+            answer = eval(self.input_field.get())
+            if float(answer).is_integer():
+                answer = int(answer)
+        except:
+            answer = "ERROR"
         self.input_field.delete(ANCHOR, END)
         self.input_field.insert(ANCHOR, answer)
 
@@ -42,16 +47,22 @@ class StandardCalculator:
         self.input_field.insert(ANCHOR, answer)
 
     def fraction(self):
-        answer = eval("1/" + self.input_field.get())
-        if float(answer).is_integer():
-            answer = int(answer)
+        try:
+            answer = eval("1/" + self.input_field.get())
+            if float(answer).is_integer():
+                answer = int(answer)
+        except:
+            answer = "ERROR"
         self.input_field.delete(ANCHOR, END)
         self.input_field.insert(ANCHOR, answer)
 
     def sqrt(self):
-        answer = math.sqrt(int(self.input_field.get()))
-        if float(answer).is_integer():
-            answer = int(answer)
+        try:
+            answer = math.sqrt(int(self.input_field.get()))
+            if float(answer).is_integer():
+                answer = int(answer)
+        except:
+            answer = "ERROR"
         self.input_field.delete(ANCHOR, END)
         self.input_field.insert(ANCHOR, answer)
 
