@@ -2,6 +2,7 @@ from tkinter import *
 import math
 
 
+# Button wrapper class - tk buttons will change colors when hovered over.
 class HoverButton(Button):
     def __init__(self, master, **kw):
         Button.__init__(self, master=master, **kw)
@@ -16,7 +17,7 @@ class HoverButton(Button):
         self['background'] = self.defaultBackground
 
 
-# calc window
+# Main standard calculator window
 class StandardCalculator:
     def press(self, num):
         if self.input_field.get() == "ERROR":
