@@ -84,7 +84,7 @@ class StandardCalculator:
     def __init__(self, master):
         self.master = master
         master.title("Calculator")
-        master.iconbitmap('csuf-seal.ico')
+        master.iconbitmap('csuf-seal.ico')  # Important Note: if this file isn't in your folder, program may fail to run
         frame = Frame(master)
         frame.grid(row=0, column=0, sticky="nsew")
         self.AnswerMode = TRUE
