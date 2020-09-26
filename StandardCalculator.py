@@ -19,8 +19,12 @@ class HoverButton(Button):
 
 # Main standard calculator window
 class StandardCalculator:
+
     def press(self, num):
         if self.input_field.get() == "ERROR":
+            self.input_field.delete(ANCHOR, END)
+        elif self.AnswerMode == TRUE:
+            self.AnswerMode = FALSE
             self.input_field.delete(ANCHOR, END)
         self.input_field.insert(END, num)
 
@@ -33,6 +37,7 @@ class StandardCalculator:
             answer = "ERROR"
         self.input_field.delete(ANCHOR, END)
         self.input_field.insert(ANCHOR, answer)
+        self.AnswerMode = TRUE
 
     def clear(self):
         self.input_field.delete(ANCHOR, END)
@@ -73,12 +78,14 @@ class StandardCalculator:
         master.iconbitmap('csuf-seal.ico')
         frame = Frame(master)
         frame.grid(row=0, column=0, sticky="nsew")
+        self.AnswerMode = TRUE
 
         # Row 1
         master.grid_rowconfigure(0, weight=1)
         master.grid_columnconfigure(4, weight=1)
         self.input_field = Entry(frame, justify=RIGHT, font="Calibri 40", width=6, borderwidth=7)
         self.input_field.grid(row=0, column=0, columnspan=30, ipady=5, ipadx=70)
+        self.input_field.insert(ANCHOR, "0")
 
         btn_mod = HoverButton(frame, text="%", height=2, width=9, bg="gray80", activebackground='gray73',
                               font="Calibri 11 bold",
