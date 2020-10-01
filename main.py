@@ -246,6 +246,7 @@ class App(tk.Tk):
                 #img = cv2.imread('6+9_irl.jpeg')
                 retval, img = camera.read()
                 img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+                print(pytesseract.image_to_string(img))
                 img = numpy.rot90(img)
                 img = numpy.flip(img, axis=0)  # Flipped about the Y axis
                 img = pygame.surfarray.make_surface(img)
