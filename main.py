@@ -1,12 +1,14 @@
 # This app was created to be a calculator with fun and unexpected features. It is a 3-manned project overall.
 # This is Gabriel Magallanes's contributions (for better or for worse)
 # CSUF Fall 2020 - CPSC
-
+import numpy
 import pygame, sys
 import os  # I'm using this to make sure that my external code is included
 import random
 import tkinter as tk
 import time
+import cv2
+import pytesseract
 # Note: I had to manually install imagetk with the command:  sudo apt-get install python3-pil.imagetk
 from tkinter.ttk import *
 from tkinter import *
@@ -30,6 +32,7 @@ BLACK_RGB = (0, 0, 0)
 LGREY_RGB = (196, 196, 196)
 center_coordinates = (640, 360)  # (x, y)
 center_top_coordinates = '640, 20'
+
 
 
 class SplashScreen(tk.Toplevel):
@@ -113,6 +116,8 @@ class App(tk.Tk):
 
         click = False
 
+
+
         def home_screen():
             while True:
                 screen.fill(WHITE_RGB)
@@ -135,7 +140,9 @@ class App(tk.Tk):
                 pygame.draw.rect(screen, LGREY_RGB, button_kids_calc)
                 pygame.draw.rect(screen, LGREY_RGB, button_std_calc)
                 pygame.draw.rect(screen, LGREY_RGB, button_camera_calc)
-                pygame.draw.rect(screen, LGREY_RGB, button_options)
+                #pygame.draw.rect(screen, LGREY_RGB, button_options)
+                
+                #button_kids_calc.get_rect(center=())
 
                 # Drawing the text labels onto the buttons
                 draw_text('Kiddie Calculator', font, BLACK_RGB, screen, button_kids_calc.centerx, button_kids_calc.centery, False, False)
@@ -220,6 +227,12 @@ class App(tk.Tk):
 
         def camera_calculator():
             running = True
+
+            camera_index = 0
+            camera = cv2.VideoCapture(camera_index)
+            camera.set(3, 640)
+            camera.set(4, 480)
+
             while running:
                 screen.fill(BLUE_RGB)
 
@@ -227,6 +240,20 @@ class App(tk.Tk):
                 draw_text('PRESS ESCAPE TO RETURN TO MAIN MENU', font, WHITE_RGB, screen, 20, 20, True, False)
 
                 # Todo: code for the camera calc goes here
+
+                #pytesseract.pytesseract.tesseract_cmd =
+
+                #img = cv2.imread('6+9_irl.jpeg')
+                retval, img = camera.read()
+                img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+                img = numpy.rot90(img)
+                img = numpy.flip(img, axis=0)  # Flipped about the Y axis
+                img = pygame.surfarray.make_surface(img)
+                screen.blit(img, (0,100))
+                #cv2.imshow('Result', img)
+                cv2.waitKey(200)
+
+
 
                 for event in pygame.event.get():
                     if event.type == QUIT:
