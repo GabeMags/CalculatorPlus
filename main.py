@@ -226,7 +226,6 @@ class App(tk.Tk):
         def camera_calculator():
 
             running = True
-            click = False
 
             camera_index = 0
             camera = cv2.VideoCapture(camera_index)
@@ -234,6 +233,7 @@ class App(tk.Tk):
             camera.set(4, 480)
 
             while running:
+                click = False
                 screen.fill(BLUE_RGB)
 
                 draw_text('Camera Calculator', font, WHITE_RGB, screen, 20, 20, False, True)
@@ -274,18 +274,19 @@ class App(tk.Tk):
                 img = pygame.surfarray.make_surface(img)
                 screen.blit(img, (0, 100))
 
+                def number_crunch():
+                    retval, img = camera.read()
+                    img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+                    problem = pytesseract.image_to_string(img)
+                    try:
+                        print(problem)
+                        print(eval(problem))
+                    except:
+                        print("error")
+
                 if button_capture_frame.collidepoint(mouse_x, mouse_y):
                     if click:
-                        retval, img = camera.read()
-                        img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
-                        problem = pytesseract.image_to_string(img)
-                        try:
-                            print(problem)
-                            print(eval(problem))
-                        except:
-                            print("error")
-                        # img = cv2.imread('6+9_irl.jpeg')
-                        #print(pytesseract.image_to_string(img))
+                        number_crunch()
 
                 pygame.display.update()
                 mainClock.tick(60)  # Todo: Idk what this really does
