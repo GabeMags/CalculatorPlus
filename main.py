@@ -274,11 +274,18 @@ class App(tk.Tk):
                 img = pygame.surfarray.make_surface(img)
                 screen.blit(img, (0, 100))
 
-                if button_capture_frame.collidepoint((mouse_x, mouse_y)):
+                if button_capture_frame.collidepoint(mouse_x, mouse_y):
                     if click:
                         retval, img = camera.read()
+                        img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+                        problem = pytesseract.image_to_string(img)
+                        try:
+                            print(problem)
+                            print(eval(problem))
+                        except:
+                            print("error")
                         # img = cv2.imread('6+9_irl.jpeg')
-                        print(pytesseract.image_to_string(img))
+                        #print(pytesseract.image_to_string(img))
 
                 pygame.display.update()
                 mainClock.tick(60)  # Todo: Idk what this really does
