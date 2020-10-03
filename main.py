@@ -20,13 +20,21 @@ pytesseract.pytesseract.tesseract_cmd = 'C:\\Users\\Sean\\AppData\\Local\\Tesser
 # cv2.imshow('Image', img)
 # cv2.waitKey(0)
 
+
 vs = WebcamVideoStream(src=0).start()
 while True:
     frame = vs.read()
     frame = imutils.resize(frame, width=1080)
-    problem = pytesseract.image_to_string(frame)
     cv2.imshow("Frame", frame)
     if args["display"] > 0:
         cv2.imshow("Frame", frame)
     if cv2.waitKey(1) & 0xFF == ord('q'):
-        break
+        img = vs.read()
+        img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+        problem = pytesseract.image_to_string(img)
+        try:
+            print(problem)
+            print(eval(problem))
+        except:
+            print("error")
+
