@@ -34,7 +34,6 @@ center_coordinates = (640, 360)  # (x, y)
 center_top_coordinates = '640, 20'
 
 
-
 class SplashScreen(tk.Toplevel):
     def __init__(self, parent):
         tk.Toplevel.__init__(self, parent)
@@ -95,6 +94,8 @@ class App(tk.Tk):
 
         font = pygame.font.SysFont(None, 20)  # Size 20 font with default font type
 
+        click = False
+
         # Function to draw text wherever I need to. NOTE:
         # true_centered is a boolean- if true, then center it in the middle of the screen
         #                               if false, use x, y
@@ -114,12 +115,11 @@ class App(tk.Tk):
 
             surface.blit(text_obj, text_rect)
 
-        click = False
-
 
 
         def home_screen():
             while True:
+                click = False
                 screen.fill(WHITE_RGB)
                 # Todo: I want to change this from just text to a graphic for the title? maybe?
                 # Technically the x and y don't matter here so I made them 404 (arbitrary)
@@ -129,6 +129,19 @@ class App(tk.Tk):
 
                 # Mouse cursor location tracking
                 mouse_x, mouse_y = pygame.mouse.get_pos()
+
+                # Check for keypress/clicks
+                for event in pygame.event.get():
+                    if event.type == QUIT:
+                        pygame.quit()
+                        sys.exit()
+                    if event.type == KEYDOWN:
+                        if event.key == K_ESCAPE:
+                            pygame.quit()
+                            sys.exit()
+                    if event.type == MOUSEBUTTONDOWN:
+                        if event.button == 1:
+                            click = True
 
                 # Button objects [without text] and their locations
                 button_kids_calc = pygame.Rect(280, 500, 200, 50)  # Rect(dist from left, dist from top, width, height)
@@ -163,21 +176,6 @@ class App(tk.Tk):
                 if button_options.collidepoint((mouse_x, mouse_y)):
                     if click:
                         pass  # Todo: options mode needs to be written
-
-                click = False
-
-                # Check for keypress/clicks
-                for event in pygame.event.get():
-                    if event.type == QUIT:
-                        pygame.quit()
-                        sys.exit()
-                    if event.type == KEYDOWN:
-                        if event.key == K_ESCAPE:
-                            pygame.quit()
-                            sys.exit()
-                    if event.type == MOUSEBUTTONDOWN:
-                        if event.button == 1:
-                            click = True
 
                 pygame.display.update()
                 mainClock.tick(60)  # Todo: Idk what this really does
@@ -226,7 +224,9 @@ class App(tk.Tk):
                 mainClock.tick(60)  # Todo: Idk what this really does
 
         def camera_calculator():
+
             running = True
+            click = False
 
             camera_index = 0
             camera = cv2.VideoCapture(camera_index)
@@ -241,21 +241,6 @@ class App(tk.Tk):
 
                 # Todo: code for the camera calc goes here
 
-                #pytesseract.pytesseract.tesseract_cmd =
-
-                #img = cv2.imread('6+9_irl.jpeg')
-                retval, img = camera.read()
-                img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
-                print(pytesseract.image_to_string(img))
-                img = numpy.rot90(img)
-                img = numpy.flip(img, axis=0)  # Flipped about the Y axis
-                img = pygame.surfarray.make_surface(img)
-                screen.blit(img, (0,100))
-                #cv2.imshow('Result', img)
-                cv2.waitKey(200)
-
-
-
                 for event in pygame.event.get():
                     if event.type == QUIT:
                         pygame.quit()
@@ -263,6 +248,37 @@ class App(tk.Tk):
                     if event.type == KEYDOWN:
                         if event.key == K_ESCAPE:
                             running = False
+                    if event.type == MOUSEBUTTONDOWN:
+                        if event.button == 1:
+                            click = True
+
+                #pytesseract.pytesseract.tesseract_cmd =
+
+                # Mouse cursor location tracking
+                mouse_x, mouse_y = pygame.mouse.get_pos()
+
+                # Button objects [without text] and their locations
+                button_capture_frame = pygame.Rect(280, 600, 200, 50)  # Rect(dist from left, dist from top, width, height)
+
+                # Drawing buttons to the screen with their styles
+                pygame.draw.rect(screen, LGREY_RGB, button_capture_frame)
+
+                # Drawing the text labels onto the buttons
+                draw_text('Capture!', font, BLACK_RGB, screen, button_capture_frame.centerx,
+                          button_capture_frame.centery, False, False)
+
+                retval, img = camera.read()
+                img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+                img = numpy.rot90(img)
+                img = numpy.flip(img, axis=0)  # Flipped about the Y axis
+                img = pygame.surfarray.make_surface(img)
+                screen.blit(img, (0, 100))
+
+                if button_capture_frame.collidepoint((mouse_x, mouse_y)):
+                    if click:
+                        retval, img = camera.read()
+                        # img = cv2.imread('6+9_irl.jpeg')
+                        print(pytesseract.image_to_string(img))
 
                 pygame.display.update()
                 mainClock.tick(60)  # Todo: Idk what this really does
