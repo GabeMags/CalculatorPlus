@@ -5,8 +5,7 @@ import random
 def gen_question():
     operator = "+-"
     numbers = "0123456789"
-    equation = random.choice(numbers) + " " + random.choice(operator) + " " + random.choice(numbers)
-    return equation
+    return random.choice(numbers) + " " + random.choice(operator) + " " + random.choice(numbers)
 
 
 # Evaluates a math question. Returns the answer in a string.
