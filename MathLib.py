@@ -22,12 +22,16 @@ def compare_answers(actual_answer, user_input_answer):
     return str(actual_answer) == str(user_input_answer)
 
 
-question = gen_question()
-actual_answer = evaluate_question(question)
-print(question)
-try:
-    user_input = int(input("Answer is: "))
-    print(compare_answers(actual_answer, user_input))
-except:
-    print("invalid input")
-
+count = 3
+while count != 0:
+    question = gen_question()
+    actual_answer = evaluate_question(question)
+    print(question)
+    try:
+        user_input = int(input("Answer is: "))
+        print(compare_answers(actual_answer, user_input))
+        if not compare_answers(actual_answer, user_input):
+            count = count - 1
+    except:
+        print("invalid input")
+        count = count - 1
