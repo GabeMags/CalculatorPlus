@@ -9,6 +9,8 @@ import tkinter as tk
 import time
 import cv2
 import pytesseract
+import MathLib as math
+import InputClass as inputclass
 # Note: I had to manually install imagetk with the command:  sudo apt-get install python3-pil.imagetk
 from tkinter.ttk import *
 from tkinter import *
@@ -115,8 +117,6 @@ class App(tk.Tk):
 
             surface.blit(text_obj, text_rect)
 
-
-
         def home_screen():
             while True:
                 click = False
@@ -182,13 +182,16 @@ class App(tk.Tk):
 
         def kids_calculator():
             running = True
+            question = math.gen_question()
+
             while running:
                 # Usual display visuals
-                screen.fill(RED_RGB)
+                screen.fill(LGREY_RGB)
+                input_box1 = inputclass.InputBox(100, 100, 140, 32)
+                input_box1.draw(screen)
                 draw_text('Kids Calculator', font, WHITE_RGB, screen, 20, 20, False, True)
-                draw_text('PRESS ESCAPE TO RETURN TO MAIN MENU', font, WHITE_RGB, screen, 20, 20, True, False)
-
-                # TODO: MIRWAIS'S CODE GOES HERE
+                # draw_text('PRESS ESCAPE TO RETURN TO MAIN MENU', font, WHITE_RGB, screen, 20, 20, True, False)
+                draw_text(question, font, WHITE_RGB, screen, 20, 20, True, False)
 
                 # Logic for returning to the main screen or quitting program
                 for event in pygame.event.get():
