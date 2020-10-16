@@ -195,6 +195,7 @@ class App(tk.Tk):
 
                 # Logic for returning to the main screen or quitting program
                 for event in pygame.event.get():
+                    input_box1.handle_event(event)
                     if event.type == QUIT:
                         pygame.quit()
                         sys.exit()

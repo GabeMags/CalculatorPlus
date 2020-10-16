@@ -1,6 +1,6 @@
-import pygame as pg
+import main
 
-#pg.init()
+pg = main.pygame
 #screen = pg.display.set_mode((640, 480))
 COLOR_INACTIVE = pg.Color('lightskyblue3')
 COLOR_ACTIVE = pg.Color('dodgerblue2')
