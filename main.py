@@ -9,8 +9,11 @@ import tkinter as tk
 import time
 import cv2
 import pytesseract
+from pygame import surfarray
+
 import MathLib as math
-import InputClass as inputclass
+#import InputClass as inputclass
+import CalClass as cal
 # Note: I had to manually install imagetk with the command:  sudo apt-get install python3-pil.imagetk
 from tkinter.ttk import *
 from tkinter import *
@@ -31,7 +34,7 @@ RED_RGB   = (255, 0, 0)
 GREEN_RGB = (0, 255, 0)
 BLUE_RGB  = (0, 0, 255)
 BLACK_RGB = (0, 0, 0)
-LGREY_RGB = (196, 196, 196)
+LGREY_RGB = (206, 206, 206)
 center_coordinates = (640, 360)  # (x, y)
 center_top_coordinates = '640, 20'
 
@@ -94,7 +97,8 @@ class App(tk.Tk):
 
         screen = self.screen
 
-        font = pygame.font.SysFont(None, 20)  # Size 20 font with default font type
+        font_sm = pygame.font.SysFont(None, 20)  # Size 20 small font
+        font_med = pygame.font.SysFont(None, 35) # Size 35 medium font
 
         click = False
 
@@ -103,6 +107,7 @@ class App(tk.Tk):
         #                               if false, use x, y
         # is_title_text is a boolean- if it's true, it is placed in the title area of the screen
         def draw_text(text, font, font_color, surface, x, y, true_centered, is_title_text):
+
             text_obj = font.render(text, 1, font_color)
 
             if not true_centered:
@@ -123,9 +128,9 @@ class App(tk.Tk):
                 screen.fill(WHITE_RGB)
                 # Todo: I want to change this from just text to a graphic for the title? maybe?
                 # Technically the x and y don't matter here so I made them 404 (arbitrary)
-                draw_text(app_title, font, BLACK_RGB, screen, 404, 404, False, True)
-                draw_text('HOME_SCREEN', font, BLACK_RGB, screen, window_width/2, 200, False, False)
-                draw_text('Click on one of the buttons below to start a mode! Press ESC to quit program', font, BLACK_RGB, screen, 20, 20, True, False)
+                draw_text(app_title, font_med, BLACK_RGB, screen, 404, 404, False, True)
+                draw_text('HOME_SCREEN', font_med, BLACK_RGB, screen, window_width/2, 200, False, False)
+                draw_text('Click on one of the buttons below to start a mode! Press ESC to quit program', font_sm, BLACK_RGB, screen, 20, 20, True, False)
 
                 # Mouse cursor location tracking
                 mouse_x, mouse_y = pygame.mouse.get_pos()
@@ -158,9 +163,9 @@ class App(tk.Tk):
                 #button_kids_calc.get_rect(center=())
 
                 # Drawing the text labels onto the buttons
-                draw_text('Kiddie Calculator', font, BLACK_RGB, screen, button_kids_calc.centerx, button_kids_calc.centery, False, False)
-                draw_text('Standard Calculator', font, BLACK_RGB, screen, button_std_calc.centerx, button_std_calc.centery, False, False)
-                draw_text('Camera Calculator', font, BLACK_RGB, screen, button_camera_calc.centerx, button_camera_calc.centery, False, False)
+                draw_text('Kiddie Calculator', font_sm, BLACK_RGB, screen, button_kids_calc.centerx, button_kids_calc.centery, False, False)
+                draw_text('Standard Calculator', font_sm, BLACK_RGB, screen, button_std_calc.centerx, button_std_calc.centery, False, False)
+                draw_text('Camera Calculator', font_sm, BLACK_RGB, screen, button_camera_calc.centerx, button_camera_calc.centery, False, False)
 
                 # Logic for clicking on the buttons (maybe make this into a switch case? i know its not elegant)
                 # Yes, buttons are basically collision-tracking rectangles.
@@ -182,26 +187,95 @@ class App(tk.Tk):
 
         def kids_calculator():
             running = True
+            click = False
             question = math.gen_question()
+            #question = cal.
+
+            # Process the picture in the given path and make a complete button surface object
+            def make_button_surface(file, is_number_button = True):
+                # Load a picture with its transparency alphas
+                picture_to_process = pygame.image.load('button_images/' + str(file)).convert_alpha()
+
+                if is_number_button:
+                    # Transform picture as a number button
+                    picture = pygame.transform.scale(picture_to_process, (200, 180))
+
+                    # Make a surface that will act as a button
+                    surface = pygame.Surface((80, 80))
+                    #surface.fill(LGREY_RGB)
+
+                    # Put the picture onto the button surface
+                    surface.blit(picture, (-60, -50))
+                else:
+                    # Transform picture as an action button
+                    picture = pygame.transform.scale(picture_to_process, (350, 280))
+
+                    # Make a surface that will act as a button
+                    surface = pygame.Surface((160, 80))
+                    # surface.fill(LGREY_RGB)
+
+                    # Put the picture onto the button surface
+                    surface.blit(picture, (-104, -104))
+
+                return surface
+
+            # Load up the images for the buttons (passive)
+            b0_surface = make_button_surface('0 inactive.png')
+            b1_surface = make_button_surface('1 inactive.png')
+            b2_surface = make_button_surface('2 inactive.png')
+            b3_surface = make_button_surface('3 inactive.png')
+            b4_surface = make_button_surface('4 inactive.png')
+            b5_surface = make_button_surface('5 inactive.png')
+            b6_surface = make_button_surface('6 inactive.png')
+            b7_surface = make_button_surface('7 inactive.png')
+            b8_surface = make_button_surface('8 inactive.png')
+            b9_surface = make_button_surface('9 inactive.png')
+            bdelete_surface = make_button_surface('delete inactive.png', False)
+            # benter_surface = make_button_surface('enter inactive.png')
 
             while running:
                 # Usual display visuals
                 screen.fill(LGREY_RGB)
-                input_box1 = inputclass.InputBox(100, 100, 140, 32)
-                input_box1.draw(screen)
-                draw_text('Kids Calculator', font, WHITE_RGB, screen, 20, 20, False, True)
+
+                draw_text('Kids Calculator', font_med, WHITE_RGB, screen, 20, 20, False, True)
                 # draw_text('PRESS ESCAPE TO RETURN TO MAIN MENU', font, WHITE_RGB, screen, 20, 20, True, False)
-                draw_text(question, font, WHITE_RGB, screen, 20, 20, True, False)
+                draw_text(question, font_med, WHITE_RGB, screen, 20, 20, True, False)
+
+                # Mouse cursor location tracking
+                mouse_x, mouse_y = pygame.mouse.get_pos()
+
+                # Put all the buttons on the screen
+                # ROW 0
+                screen.blit(b7_surface, (900, 200))
+                screen.blit(b8_surface, (980, 200))
+                screen.blit(b9_surface, (1060, 200))
+                # ROW 1
+                screen.blit(b4_surface, (900, 280))
+                screen.blit(b5_surface, (980, 280))
+                screen.blit(b6_surface, (1060, 280))
+                # ROW 2
+                screen.blit(b1_surface, (900, 360))
+                screen.blit(b2_surface, (980, 360))
+                screen.blit(b3_surface, (1060, 360))
+                # ROW 3
+                screen.blit(b0_surface, (900, 440))
+                screen.blit(bdelete_surface, (980, 440))
+
+
+
+
 
                 # Logic for returning to the main screen or quitting program
                 for event in pygame.event.get():
-                    input_box1.handle_event(event)
                     if event.type == QUIT:
                         pygame.quit()
                         sys.exit()
                     if event.type == KEYDOWN:
                         if event.key == K_ESCAPE:
                             running = False
+                    if event.type == MOUSEBUTTONDOWN:
+                        if event.button == 1:
+                            click = True
 
                 pygame.display.update()
                 mainClock.tick(60)  # Todo: Idk what this really does
@@ -211,8 +285,8 @@ class App(tk.Tk):
             while running:
                 screen.fill(GREEN_RGB)
 
-                draw_text('Standard Calculator', font, BLACK_RGB, screen, 20, 20, False, True)
-                draw_text('PRESS ESCAPE TO RETURN TO MAIN MENU', font, BLACK_RGB, screen, 20, 20, True, False)
+                draw_text('Standard Calculator', font_sm, BLACK_RGB, screen, 20, 20, False, True)
+                draw_text('PRESS ESCAPE TO RETURN TO MAIN MENU', font_sm, BLACK_RGB, screen, 20, 20, True, False)
 
                 # Todo: add in code for the standard calc
 
@@ -240,8 +314,8 @@ class App(tk.Tk):
                 click = False
                 screen.fill(BLUE_RGB)
 
-                draw_text('Camera Calculator', font, WHITE_RGB, screen, 20, 20, False, True)
-                draw_text('PRESS ESCAPE TO RETURN TO MAIN MENU', font, WHITE_RGB, screen, 20, 20, True, False)
+                draw_text('Camera Calculator', font_sm, WHITE_RGB, screen, 20, 20, False, True)
+                draw_text('PRESS ESCAPE TO RETURN TO MAIN MENU', font_sm, WHITE_RGB, screen, 20, 20, True, False)
 
                 # Todo: code for the camera calc goes here
 
@@ -268,7 +342,7 @@ class App(tk.Tk):
                 pygame.draw.rect(screen, LGREY_RGB, button_capture_frame)
 
                 # Drawing the text labels onto the buttons
-                draw_text('Capture!', font, BLACK_RGB, screen, button_capture_frame.centerx,
+                draw_text('Capture!', font_sm, BLACK_RGB, screen, button_capture_frame.centerx,
                           button_capture_frame.centery, False, False)
 
                 retval, img = camera.read()
