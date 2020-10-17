@@ -33,4 +33,3 @@ def compare_answers(actual_answer, user_input_answer):
     return str(actual_answer) == str(user_input_answer)
 
 
-print(gen_question(3))
