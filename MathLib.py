@@ -14,7 +14,8 @@ def gen_question(difficulty: int = 1):
         if x % 2 == 0:
             question_list.insert(x, random.choice(numbers))
         else:
-            question_list.insert(x, random.choice(operator))
+            question_list.insert(x, " " + random.choice(operator) + " ")
+
     return ''.join(question_list)
 
 
