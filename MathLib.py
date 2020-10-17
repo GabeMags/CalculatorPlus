@@ -2,6 +2,7 @@ import random
 
 
 # Generates a random math question with numbers including 0-9 and operators plus or minus. Returns a string.
+# Optional parameter: adjust the difficulty with an int. default difficulty is 1.
 def gen_question(difficulty: int = 1):
     if difficulty < 1:
         print("Invalid argument, exiting function.")
