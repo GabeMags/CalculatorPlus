@@ -32,5 +32,3 @@ def evaluate_question(equation):
 # Compares the user the inputted answer with the actual answer, returns a boolean.
 def compare_answers(actual_answer, user_input_answer):
     return str(actual_answer) == str(user_input_answer)
-
-
