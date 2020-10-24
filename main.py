@@ -12,7 +12,7 @@ import pytesseract
 from pygame import surfarray
 
 import MathLib as math
-#import InputClass as inputclass
+# import InputClass as inputclass
 import CalClass as cal
 # Note: I had to manually install imagetk with the command:  sudo apt-get install python3-pil.imagetk
 from tkinter.ttk import *
@@ -30,9 +30,9 @@ window_width = 1280
 window_height = 720
 # Just to make things easy
 WHITE_RGB = (255, 255, 255)
-RED_RGB   = (255, 0, 0)
+RED_RGB = (255, 0, 0)
 GREEN_RGB = (0, 255, 0)
-BLUE_RGB  = (0, 0, 255)
+BLUE_RGB = (0, 0, 255)
 BLACK_RGB = (0, 0, 0)
 LGREY_RGB = (206, 206, 206)
 center_coordinates = (640, 360)  # (x, y)
@@ -98,7 +98,7 @@ class App(tk.Tk):
         screen = self.screen
 
         font_sm = pygame.font.SysFont(None, 20)  # Size 20 small font
-        font_med = pygame.font.SysFont(None, 35) # Size 35 medium font
+        font_med = pygame.font.SysFont(None, 35)  # Size 35 medium font
 
         click = False
 
@@ -129,8 +129,9 @@ class App(tk.Tk):
                 # Todo: I want to change this from just text to a graphic for the title? maybe?
                 # Technically the x and y don't matter here so I made them 404 (arbitrary)
                 draw_text(app_title, font_med, BLACK_RGB, screen, 404, 404, False, True)
-                draw_text('HOME_SCREEN', font_med, BLACK_RGB, screen, window_width/2, 200, False, False)
-                draw_text('Click on one of the buttons below to start a mode! Press ESC to quit program', font_sm, BLACK_RGB, screen, 20, 20, True, False)
+                draw_text('HOME_SCREEN', font_med, BLACK_RGB, screen, window_width / 2, 200, False, False)
+                draw_text('Click on one of the buttons below to start a mode! Press ESC to quit program', font_sm,
+                          BLACK_RGB, screen, 20, 20, True, False)
 
                 # Mouse cursor location tracking
                 mouse_x, mouse_y = pygame.mouse.get_pos()
@@ -158,14 +159,17 @@ class App(tk.Tk):
                 pygame.draw.rect(screen, LGREY_RGB, button_kids_calc)
                 pygame.draw.rect(screen, LGREY_RGB, button_std_calc)
                 pygame.draw.rect(screen, LGREY_RGB, button_camera_calc)
-                #pygame.draw.rect(screen, LGREY_RGB, button_options)
-                
-                #button_kids_calc.get_rect(center=())
+                # pygame.draw.rect(screen, LGREY_RGB, button_options)
+
+                # button_kids_calc.get_rect(center=())
 
                 # Drawing the text labels onto the buttons
-                draw_text('Kiddie Calculator', font_sm, BLACK_RGB, screen, button_kids_calc.centerx, button_kids_calc.centery, False, False)
-                draw_text('Standard Calculator', font_sm, BLACK_RGB, screen, button_std_calc.centerx, button_std_calc.centery, False, False)
-                draw_text('Camera Calculator', font_sm, BLACK_RGB, screen, button_camera_calc.centerx, button_camera_calc.centery, False, False)
+                draw_text('Kiddie Calculator', font_sm, BLACK_RGB, screen, button_kids_calc.centerx,
+                          button_kids_calc.centery, False, False)
+                draw_text('Standard Calculator', font_sm, BLACK_RGB, screen, button_std_calc.centerx,
+                          button_std_calc.centery, False, False)
+                draw_text('Camera Calculator', font_sm, BLACK_RGB, screen, button_camera_calc.centerx,
+                          button_camera_calc.centery, False, False)
 
                 # Logic for clicking on the buttons (maybe make this into a switch case? i know its not elegant)
                 # Yes, buttons are basically collision-tracking rectangles.
@@ -189,10 +193,11 @@ class App(tk.Tk):
             running = True
             click = False
             question = math.gen_question()
-            #question = cal.
+
+            # question = cal.
 
             # Process the picture in the given path and make a complete button surface object
-            def make_button_surface(file, is_number_button = True):
+            def make_button_surface(file, is_number_button=True):
                 # Load a picture with its transparency alphas
                 picture_to_process = pygame.image.load('button_images/' + str(file)).convert_alpha()
 
@@ -202,7 +207,7 @@ class App(tk.Tk):
 
                     # Make a surface that will act as a button
                     surface = pygame.Surface((80, 80))
-                    #surface.fill(LGREY_RGB)
+                    # surface.fill(LGREY_RGB)
 
                     # Put the picture onto the button surface
                     surface.blit(picture, (-60, -50))
@@ -231,6 +236,17 @@ class App(tk.Tk):
             b8_surface = make_button_surface('8 inactive.png')
             b9_surface = make_button_surface('9 inactive.png')
             bdelete_surface = make_button_surface('delete inactive.png', False)
+            b0_active_surface = make_button_surface('0 active.png')
+            b1_active_surface = make_button_surface('1 active.png')
+            b2_active_surface = make_button_surface('2 active.png')
+            b3_active_surface = make_button_surface('3 active.png')
+            b4_active_surface = make_button_surface('4 active.png')
+            b5_active_surface = make_button_surface('5 active.png')
+            b6_active_surface = make_button_surface('6 active.png')
+            b7_active_surface = make_button_surface('7 active.png')
+            b8_active_surface = make_button_surface('8 active.png')
+            b9_active_surface = make_button_surface('9 active.png')
+            bdelete_active_surface = make_button_surface('delete active.png', False)
             # benter_surface = make_button_surface('enter inactive.png')
 
             while running:
@@ -244,25 +260,87 @@ class App(tk.Tk):
                 # Mouse cursor location tracking
                 mouse_x, mouse_y = pygame.mouse.get_pos()
 
-                # Put all the buttons on the screen
+                # Active buttons
+                # ROW 0
+                screen.blit(b7_active_surface, (900, 200))
+                screen.blit(b8_active_surface, (980, 200))
+                screen.blit(b9_active_surface, (1060, 200))
+                # ROW 1
+                screen.blit(b4_active_surface, (900, 280))
+                screen.blit(b5_active_surface, (980, 280))
+                screen.blit(b6_active_surface, (1060, 280))
+                # ROW 2
+                screen.blit(b1_active_surface, (900, 360))
+                screen.blit(b2_active_surface, (980, 360))
+                screen.blit(b3_active_surface, (1060, 360))
+                # ROW 3
+                screen.blit(b0_active_surface, (900, 440))
+                screen.blit(bdelete_active_surface, (980, 440))
+
+                # Inactive Buttons
                 # ROW 0
                 screen.blit(b7_surface, (900, 200))
+                b7_rect = pygame.Rect(900, 200, 80, 80)
                 screen.blit(b8_surface, (980, 200))
+                b8_rect = pygame.Rect(980, 200, 80, 80)
                 screen.blit(b9_surface, (1060, 200))
+                b9_rect = pygame.Rect(1060, 200, 80, 80)
                 # ROW 1
                 screen.blit(b4_surface, (900, 280))
+                b4_rect = pygame.Rect(900, 280, 80, 80)
                 screen.blit(b5_surface, (980, 280))
+                b5_rect = pygame.Rect(980, 280, 80, 80)
                 screen.blit(b6_surface, (1060, 280))
+                b6_rect = pygame.Rect(1060, 280, 80, 80)
                 # ROW 2
                 screen.blit(b1_surface, (900, 360))
+                b1_rect = pygame.Rect(900, 360, 80, 80)
                 screen.blit(b2_surface, (980, 360))
+                b2_rect = pygame.Rect(980, 360, 80, 80)
                 screen.blit(b3_surface, (1060, 360))
+                b3_rect = pygame.Rect(1060, 360, 80, 80)
                 # ROW 3
                 screen.blit(b0_surface, (900, 440))
+                b0_rect = pygame.Rect(900, 440, 80, 80)
                 screen.blit(bdelete_surface, (980, 440))
-
-
-
+                bdelete_rect = pygame.Rect(980, 440, 80, 80)
+                print(b7_surface.get_rect())
+                if b7_rect.collidepoint(pygame.mouse.get_pos()) :
+                    b7_surface.set_alpha(0)
+                else:
+                    b7_surface.set_alpha(255)
+                if b8_rect.collidepoint(pygame.mouse.get_pos()):
+                    b8_surface.set_alpha(0)
+                else:
+                    b8_surface.set_alpha(255)
+                if b9_rect.collidepoint(pygame.mouse.get_pos()):
+                    b9_surface.set_alpha(0)
+                else:
+                    b9_surface.set_alpha(255)
+                if b4_rect.collidepoint(pygame.mouse.get_pos()):
+                    b4_surface.set_alpha(0)
+                else:
+                    b4_surface.set_alpha(255)
+                if b5_rect.collidepoint(pygame.mouse.get_pos()):
+                    b5_surface.set_alpha(0)
+                else:
+                    b5_surface.set_alpha(255)
+                if b6_rect.collidepoint(pygame.mouse.get_pos()):
+                    b6_surface.set_alpha(0)
+                else:
+                    b6_surface.set_alpha(255)
+                if b1_rect.collidepoint(pygame.mouse.get_pos()):
+                    b1_surface.set_alpha(0)
+                else:
+                    b1_surface.set_alpha(255)
+                if b2_rect.collidepoint(pygame.mouse.get_pos()):
+                    b2_surface.set_alpha(0)
+                else:
+                    b2_surface.set_alpha(255)
+                if b3_rect.collidepoint(pygame.mouse.get_pos()):
+                    b3_surface.set_alpha(0)
+                else:
+                    b3_surface.set_alpha(255)
 
 
                 # Logic for returning to the main screen or quitting program
@@ -278,7 +356,7 @@ class App(tk.Tk):
                             click = True
 
                 pygame.display.update()
-                mainClock.tick(60)  # Todo: Idk what this really does
+                # mainClock.tick(60)  # Todo: Idk what this really does
 
         def standard_calculator():
             running = True
@@ -330,13 +408,14 @@ class App(tk.Tk):
                         if event.button == 1:
                             click = True
 
-                #pytesseract.pytesseract.tesseract_cmd =
+                # pytesseract.pytesseract.tesseract_cmd =
 
                 # Mouse cursor location tracking
                 mouse_x, mouse_y = pygame.mouse.get_pos()
 
                 # Button objects [without text] and their locations
-                button_capture_frame = pygame.Rect(280, 600, 200, 50)  # Rect(dist from left, dist from top, width, height)
+                button_capture_frame = pygame.Rect(280, 600, 200,
+                                                   50)  # Rect(dist from left, dist from top, width, height)
 
                 # Drawing buttons to the screen with their styles
                 pygame.draw.rect(screen, LGREY_RGB, button_capture_frame)
@@ -375,15 +454,3 @@ class App(tk.Tk):
 if __name__ == "__main__":
     app = App()
     app.mainloop()
-
-
-
-
-
-
-
-
-
-
-
-
