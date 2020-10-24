@@ -341,6 +341,15 @@ class App(tk.Tk):
                     b3_surface.set_alpha(0)
                 else:
                     b3_surface.set_alpha(255)
+                #Delete/0 buttons
+                if b0_rect.collidepoint(pygame.mouse.get_pos()):
+                    b0_surface.set_alpha(0)
+                else:
+                    b0_surface.set_alpha(255)
+                if bdelete_rect.collidepoint(pygame.mouse.get_pos()):
+                    bdelete_surface.set_alpha(0)
+                else:
+                    bdelete_surface.set_alpha(255)
 
 
                 # Logic for returning to the main screen or quitting program
