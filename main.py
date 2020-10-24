@@ -304,7 +304,7 @@ class App(tk.Tk):
                 b0_rect = pygame.Rect(900, 440, 80, 80)
                 screen.blit(bdelete_surface, (980, 440))
                 bdelete_rect = pygame.Rect(980, 440, 160, 80)
-                print(b7_surface.get_rect())
+
                 if b7_rect.collidepoint(pygame.mouse.get_pos()) :
                     b7_surface.set_alpha(0)
                 else:
