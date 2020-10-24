@@ -365,7 +365,7 @@ class App(tk.Tk):
                             click = True
 
                 pygame.display.update()
-                # mainClock.tick(60)  # Todo: Idk what this really does
+                mainClock.tick(60)  # Todo: Idk what this really does
 
         def standard_calculator():
             running = True
