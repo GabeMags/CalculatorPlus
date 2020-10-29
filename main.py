@@ -10,6 +10,7 @@ import time
 import cv2
 import pytesseract
 from pygame import surfarray
+import KidsCalc_tk_App as m_kcalc
 
 import MathLib as math
 # import InputClass as inputclass
@@ -189,12 +190,11 @@ class App(tk.Tk):
                 pygame.display.update()
                 mainClock.tick(60)  # Todo: Idk what this really does
 
+
         def kids_calculator():
             running = True
-            click = False
+            click= False
             question = math.gen_question()
-
-            # question = cal.
 
             # Process the picture in the given path and make a complete button surface object
             def make_button_surface(file, is_number_button=True):
@@ -248,6 +248,13 @@ class App(tk.Tk):
             b9_active_surface = make_button_surface('9 active.png')
             bdelete_active_surface = make_button_surface('delete active.png', False)
             # benter_surface = make_button_surface('enter inactive.png')
+
+            def start_from_gui():
+                running = True
+                app2 = m_kcalc.Application()
+                while running:
+                    # PROGRAM EXECUTION STARTS HERE
+                    app2.calc_For_Kids()
 
             while running:
                 # Usual display visuals
@@ -348,9 +355,10 @@ class App(tk.Tk):
                     b0_surface.set_alpha(255)
                 if bdelete_rect.collidepoint(pygame.mouse.get_pos()):
                     bdelete_surface.set_alpha(0)
+                    subprocess = m_kcalc.Application(self)
+                    subprocess.calc_For_Kids()
                 else:
                     bdelete_surface.set_alpha(255)
-
 
                 # Logic for returning to the main screen or quitting program
                 for event in pygame.event.get():

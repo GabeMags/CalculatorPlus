@@ -26,7 +26,7 @@
 #         print("This is how it looks viually", a * image, "+ ", b * image)
 #
 #         answer= int(input())
-#
+# 
 #         if answer == obj.add():
 #             print("Perfect, the answer is correct...")
 #             cont = input("\nIf you want to solve another question then press 1. If not then any other key ")
