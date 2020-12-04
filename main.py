@@ -9,7 +9,7 @@ import tkinter as tk
 import time
 import cv2
 import pytesseract
-from pygame import surfarray
+from pygame import surfarray, mixer
 import KidsCalc_tk_App as KidCalc
 
 # Note: I had to manually install imagetk with the command:  sudo apt-get install python3-pil.imagetk
@@ -17,6 +17,8 @@ from tkinter.ttk import *
 from tkinter import *
 from PIL import Image, ImageTk
 from pygame.locals import *
+import ImageLabelClass as gif_handler
+
 
 mainClock = pygame.time.Clock()
 
@@ -52,6 +54,20 @@ class SplashScreen(tk.Toplevel):
         input_image = Image.open("backgrounds/splash.jpg")
         background = ImageTk.PhotoImage(input_image)
 
+        # The Devs!
+        self.fall_guy_gif_GM = gif_handler.ImageLabel(self)
+        self.fall_guy_gif_SM = gif_handler.ImageLabel(self)
+        self.fall_guy_gif_MM = gif_handler.ImageLabel(self)
+
+        self.fall_guy_gif_GM.place(x=300, y=400, anchor="nw")
+        self.fall_guy_gif_GM.load('backgrounds/pixelfallguy_loading.gif', 155, 135)
+
+        self.fall_guy_gif_SM.place(x=550, y=400, anchor="nw")
+        self.fall_guy_gif_SM.load('backgrounds/pixelfallguy_loading.gif', 155, 135)
+
+        self.fall_guy_gif_MM.place(x=800, y=400, anchor="nw")
+        self.fall_guy_gif_MM.load('backgrounds/pixelfallguy_loading.gif', 155, 135)
+
         # Fake progress bar widget
         # (determinate mode animates it for us)
         splash_progress_bar = Progressbar(canvas, orient=HORIZONTAL, length=100, mode='determinate')
@@ -85,6 +101,11 @@ class App(tk.Tk):
         # Basic window parameters
         self.title(app_title)
         self.geometry("%dx%d+0+0" % (window_width, window_height))
+
+        # Load kitty calc mode music
+        mixer.init()
+        mixer.music.load("audio/Everybody_Falls_(Fall_Guys_Theme).mp3")
+        mixer.music.set_volume(0.5)
 
         # Finished loading so destroy splash
         splash.destroy()
@@ -164,6 +185,10 @@ class App(tk.Tk):
                 # Yes, buttons are basically collision-tracking rectangles.
                 if button_kids_calc.collidepoint((mouse_x, mouse_y)):
                     if click:
+                        # Play Fall Guys soundtrack
+                        mixer.music.play()
+
+                        # Launch the module
                         subprocess = KidCalc.Application(self)
                         subprocess.calc_For_Kids()
                 if button_camera_calc.collidepoint((mouse_x, mouse_y)):

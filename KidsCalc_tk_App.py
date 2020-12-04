@@ -5,12 +5,6 @@ from tkinter import *
 from PIL import ImageTk, Image
 import ImageLabelClass as gif_handler
 
-# For numpad creation
-# numpad_button_list = [
-#     '7', '8', '9',
-#     '4', '5', '6',
-#     '1', '2', '3', '0']
-
 class Application(Toplevel):
     def __init__(self, parent):
         Toplevel.__init__(self, parent)
@@ -24,6 +18,9 @@ class Application(Toplevel):
 
         # Cool background
         self.star_gif_background = gif_handler.ImageLabel(self.root)
+
+        # Cool fall guy
+        self.fall_guy_gif = gif_handler.ImageLabel(self.root)
 
         # Entry box
         self.answerEntry = Entry(self.root, highlightbackground='#3E4149')
@@ -53,7 +50,11 @@ class Application(Toplevel):
 
         # Animated background (uses a gif to fill the window)
         self.star_gif_background.place(x=0, y=0, anchor="nw", relwidth=1.0, relheight=1.0)
-        self.star_gif_background.load('backgrounds/starfield.gif', 1280, 720)
+        self.star_gif_background.load('backgrounds/beangif.gif', 1280, 720)
+
+        # Animated player sprite
+        # self.fall_guy_gif.place(x=1000, y=90, anchor="nw")
+        # self.fall_guy_gif.load('backgrounds/pixelfallguy_loading.gif', 265, 245)
 
         # Mode select GUI buttons
         menu_title = f'\nMode Selection'
