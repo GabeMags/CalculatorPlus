@@ -10,11 +10,8 @@ import time
 import cv2
 import pytesseract
 from pygame import surfarray
-import KidsCalc_tk_App as m_kcalc
+import KidsCalc_tk_App as KidCalc
 
-import MathLib as math
-# import InputClass as inputclass
-import CalClass as cal
 # Note: I had to manually install imagetk with the command:  sudo apt-get install python3-pil.imagetk
 from tkinter.ttk import *
 from tkinter import *
@@ -52,7 +49,7 @@ class SplashScreen(tk.Toplevel):
         canvas.pack(fill=BOTH, expand=True, padx=5, pady=5)
 
         # Set the splash background image. ImageTk needs to be used for expanded image file compatibility
-        input_image = Image.open("splash.jpg")
+        input_image = Image.open("backgrounds/splash.jpg")
         background = ImageTk.PhotoImage(input_image)
 
         # Fake progress bar widget
@@ -167,7 +164,7 @@ class App(tk.Tk):
                 # Yes, buttons are basically collision-tracking rectangles.
                 if button_kids_calc.collidepoint((mouse_x, mouse_y)):
                     if click:
-                        subprocess = m_kcalc.Application(self)
+                        subprocess = KidCalc.Application(self)
                         subprocess.calc_For_Kids()
                 if button_camera_calc.collidepoint((mouse_x, mouse_y)):
                     if click:
@@ -236,7 +233,7 @@ class App(tk.Tk):
         #
         #     def start_from_gui():
         #         running = True
-        #         app2 = m_kcalc.Application()
+        #         app2 = KidCalc.Application()
         #         while running:
         #             # PROGRAM EXECUTION STARTS HERE
         #             app2.calc_For_Kids()
@@ -342,7 +339,7 @@ class App(tk.Tk):
         #         if bdelete_rect.collidepoint(pygame.mouse.get_pos()):
         #             bdelete_surface.set_alpha(0)
         #             # TODO: make a dedicated button for launching kids calc
-        #             subprocess = m_kcalc.Application(self)
+        #             subprocess = KidCalc.Application(self)
         #             subprocess.calc_For_Kids()
         #         else:
         #             bdelete_surface.set_alpha(255)
