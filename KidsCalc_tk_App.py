@@ -2,6 +2,7 @@ import os
 import random
 import time
 from tkinter import *
+from pygame import mixer
 from PIL import ImageTk, Image
 import ImageLabelClass as gif_handler
 
@@ -12,6 +13,13 @@ class Application(Toplevel):
         self.root = self
         image = Image.open("question_sprite_images/ball.gif")
         image2 = Image.open("question_sprite_images/ball.png")
+        self.victory_sound = ["audio/VO_Gen_Victory_01.wav", "audio/VO_Gen_Victory_02.wav", "audio/VO_Gen_Victory_03.wav",
+                         "audio/VO_Gen_Victory_04.wav", "audio/VO_Gen_Victory_05.wav", "audio/VO_Gen_Victory_06.wav",
+                         "audio/VO_Gen_Victory_07.wav", "audio/VO_Gen_Victory_08.wav"]
+        self.elimination_sound = ["audio/VO_Gen_Elimination_01.wav", "audio/VO_Gen_Elimination_02.wav",
+                             "audio/VO_Gen_Elimination_03.wav", "audio/VO_Gen_Elimination_05.wav",
+                             "audio/VO_Gen_Elimination_05.wav", "audio/VO_Gen_Elimination_06.wav",
+                             "audio/VO_Gen_Elimination_07.wav"]
         width, height = image.size
         self.img = ImageTk.PhotoImage(image.convert("RGB").resize((round(20 / height * width), round(24))))
         self.img2 = ImageTk.PhotoImage(image2.convert("RGB").resize((round(20 / height * width), round(24))))
@@ -84,10 +92,14 @@ class Application(Toplevel):
 
         if self.answerEntry.get() == str(a + b):
             self.response_text_correct.grid(row=18, column=1, padx=20, columnspan=10)
+            rand_victor_sound = mixer.Sound(random.choice(self.victory_sound))
+            mixer.Sound.play(rand_victor_sound)
             self.nextButton.grid(row=22, column=1, columnspan=10)
         else:
             self.response_text_sorry_wrong.grid(row=18, column=0, padx=20, columnspan=10)
             self.bttn_clicks += 1
+            rand_wrong_sound = mixer.Sound(random.choice(self.elimination_sound))
+            mixer.Sound.play(rand_wrong_sound)
             if self.bttn_clicks >= 3:
                 self.response_text_sorry_wrong.grid_forget()
                 self.maxlabel.grid(row=20, column=0, padx=20, columnspan=10)
@@ -138,9 +150,13 @@ class Application(Toplevel):
         self.response_text_sorry_wrong.grid_forget()
         print("Sub:", self.answerEntry.get(), ">>>", str(a - b))
         if (self.answerEntry.get() == str(a - b)):
+            rand_victor_sound = mixer.Sound(random.choice(self.victory_sound))
+            mixer.Sound.play(rand_victor_sound)
             self.response_text_correct.grid(row=18, column=0, padx=20, columnspan=10)
             self.nextSubButton.grid(row=22, column=0, columnspan=10)
         else:
+            rand_wrong_sound = mixer.Sound(random.choice(self.elimination_sound))
+            mixer.Sound.play(rand_wrong_sound)
             self.response_text_sorry_wrong.grid(row=18, column=0, padx=20, columnspan=10)
             self.bttn_clicks += 1
             if self.bttn_clicks >= 3:
