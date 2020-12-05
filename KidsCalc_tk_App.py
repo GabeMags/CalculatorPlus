@@ -13,6 +13,7 @@ class Application(Toplevel):
         self.root = self
         image = Image.open("question_sprite_images/ball.gif")
         image2 = Image.open("question_sprite_images/ball.png")
+        #audio arrays
         self.victory_sound = ["audio/VO_Gen_Victory_01.wav", "audio/VO_Gen_Victory_02.wav", "audio/VO_Gen_Victory_03.wav",
                          "audio/VO_Gen_Victory_04.wav", "audio/VO_Gen_Victory_05.wav", "audio/VO_Gen_Victory_06.wav",
                          "audio/VO_Gen_Victory_07.wav", "audio/VO_Gen_Victory_08.wav"]
