@@ -31,6 +31,9 @@ class Application(Toplevel):
         # Cool fall guy
         self.fall_guy_gif = gif_handler.ImageLabel(self.root)
 
+        # # Player hearts (num of lives)
+        # self.life_heart_sprite_gif = gif_handler.ImageLabel(self.root)
+
         # Entry box
         self.answerEntry = Entry(self.root, highlightbackground='#3E4149')
 
@@ -50,7 +53,6 @@ class Application(Toplevel):
         self.response_text_correct = Label(self.root, text="\nPerfect, the answer is correct... \n", bg="black", fg="blue")
         self.response_text_sorry_wrong = Label(self.root, text="\nSorry, the answer is wrong... Please try again !\n", bg="black", fg="red")
 
-
     def calc_For_Kids(self):
         # Window creation
         self.root.title("Kitty Calculator")
@@ -61,9 +63,9 @@ class Application(Toplevel):
         self.star_gif_background.place(x=0, y=0, anchor="nw", relwidth=1.0, relheight=1.0)
         self.star_gif_background.load('backgrounds/beangif.gif', 1280, 720)
 
-        # Animated player sprite
-        # self.fall_guy_gif.place(x=1000, y=90, anchor="nw")
-        # self.fall_guy_gif.load('backgrounds/pixelfallguy_loading.gif', 265, 245)
+        # # Animated player lives
+        # self.life_heart_sprite_gif.place(x=550, y=400, anchor="nw")
+        # self.life_heart_sprite_gif.load('question_sprite_images/blueheart.gif', )
 
         # Mode select GUI buttons
         menu_title = f'\nMode Selection'
@@ -72,8 +74,8 @@ class Application(Toplevel):
                               command=self.addFunc)
         mode_btn_subtract = Button(self.root, text="Subtract", bg="#003366", fg="white", width=20,
                                    highlightbackground='#3E4149', command=self.subFunc)
-        mode_btn_multiply = Button(self.root, text="Multiply", bg="#003366", fg="white", width=20,
-                                   highlightbackground='#3E4149', command=self.mulFunc)
+        # mode_btn_multiply = Button(self.root, text="Multiply", bg="#003366", fg="white", width=20,
+        #                            highlightbackground='#3E4149', command=self.mulFunc)
         mode_btn_exit = Button(self.root, text="Exit", bg="#003366", fg="white", width=20,
                                highlightbackground='#3E4149', command=self.exitFunc)
 
@@ -81,7 +83,7 @@ class Application(Toplevel):
         menu_title_label.grid(row=0, column=0, pady=5)
         mode_btn_add.grid(row=1, column=0, pady=5)
         mode_btn_subtract.grid(row=2, column=0, pady=5)
-        mode_btn_multiply.grid(row=3, column=0, pady=5)
+        # mode_btn_multiply.grid(row=3, column=0, pady=5)
         mode_btn_exit.grid(row=4, column=0, pady=5)
 
         self.root.mainloop()
@@ -178,7 +180,7 @@ class Application(Toplevel):
         photo_list = []
         a = random.randint(0, 9)
         b = random.randint(0, 9)
-        question_text = Label(self.root, text="what do you think the difference of these two numbers are? ", bg="white")
+        question_text = Label(self.root, font=(None, 18), text="what do you think the difference of these two numbers are? ", bg="white")
         num = f"{a} - {b}"
 
         if self.pa or self.pb:
@@ -188,18 +190,18 @@ class Application(Toplevel):
                 self.pl[i + self.pa].grid_forget()
 
         if (a + b) > 0:
-            imglabel = Label(self.root, text="This is how it looks visually", bg="white")
-            imglabel.grid(row=8, column=1, pady=5, padx=20, columnspan=10)
+            imglabel = Label(self.root, font=(None, 18), text="OR", bg="white")
+            imglabel.grid(row=2, column=2, pady=25, columnspan=10)
             self.arrange_ball_images("-", a, b)
 
-        problem = Label(self.root, text=num, bg="white")
+        problem = Label(self.root, font=(None, 50), text=num, bg="white")
         submit_button = Button(self.root, text=" Submit ", highlightbackground='#3E4149',
                            command=lambda: self.checkSub(a, b))
 
-        question_text.grid(row=0, column=1, pady=5, padx=20, columnspan=10)
-        problem.grid(row=1, column=1, pady=5, padx=20, columnspan=10)
-        self.answerEntry.grid(row=15, column=1, pady=5, padx=20, columnspan=10)
-        submit_button.grid(row=16, column=1, pady=5, padx=20, columnspan=10)
+        question_text.grid(row=0, column=2, pady=15, columnspan=10)
+        problem.grid(row=1, column=2, pady=5, columnspan=10)
+        self.answerEntry.grid(row=15, column=2, pady=(50, 5), padx=20, columnspan=10)
+        submit_button.grid(row=16, column=2, pady=5, columnspan=10)
 
     def checkMul(self, a, b):
         self.response_text_correct.grid_forget()
@@ -250,8 +252,9 @@ class Application(Toplevel):
         quit()
 
     def restart_program(self):
-        python = sys.executable
-        os.execl(python, python, *sys.argv)
+        pass
+        # python = sys.executable
+        # os.execl(python, python, *sys.argv)
 
     def arrange_ball_images(self, sign, a, b):
         if self.pa:

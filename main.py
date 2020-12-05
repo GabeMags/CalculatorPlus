@@ -186,7 +186,7 @@ class App(tk.Tk):
                 if button_kids_calc.collidepoint((mouse_x, mouse_y)):
                     if click:
                         # Play Fall Guys soundtrack
-                        mixer.music.play()
+                        mixer.music.play(-1)
 
                         # Launch the module
                         subprocess = KidCalc.Application(self)
